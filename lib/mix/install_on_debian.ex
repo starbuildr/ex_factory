@@ -4,22 +4,22 @@ defmodule Mix.Tasks.InstallOnDebian do
   @service_name "ex_factory"
   @service_file "/lib/systemd/system/#{@service_name}.service"
   @service_content """
-[Unit]
-Description=Daemon to manage automatic docker-compose redeployments for the new image releases
-
-[Service]
-Type=simple
-Restart=on-failure
-Environment=MIX_ENV=prod
-Environment=LANG=en_US.UTF-8
-Environment=EX_FACTORY_ACCESS_TOKEN=$TOKEN
-Environment=EX_FACTORY_WORKDIR=$WORKDIR
-
-WorkingDirectory=#{System.cwd()}
-ExecStart=/usr/local/bin/mix run --no-halt
-
-[Install]
-WantedBy=multi-user.target
+  [Unit]
+  Description=Daemon to manage automatic docker-compose redeployments for the new image releases
+  
+  [Service]
+  Type=simple
+  Restart=on-failure
+  Environment=MIX_ENV=prod
+  Environment=LANG=en_US.UTF-8
+  Environment=EX_FACTORY_ACCESS_TOKEN=$TOKEN
+  Environment=EX_FACTORY_WORKDIR=$WORKDIR
+  
+  WorkingDirectory=#{System.cwd()}
+  ExecStart=/usr/local/bin/mix run --no-halt
+  
+  [Install]
+  WantedBy=multi-user.target
   """ |> String.trim()
 
   @doc """
