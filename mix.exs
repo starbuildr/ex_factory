@@ -43,7 +43,9 @@ defmodule ExFactory.Mixfile do
   defp deps do
     [
       {:cowboy, "~> 1.0"},
-      {:plug, "~> 1.0"}
+      {:plug, "~> 1.0"},
+      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:distillery, "~> 1.5", runtime: false}
     ]
   end
 

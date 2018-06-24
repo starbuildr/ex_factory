@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Docker.Compose.StopContainers do
   """
   def run(_) do
     command = "docker-compose"
-    args = ["pull"]
+    args = ["down"]
     exec(command, args)
   end
 end

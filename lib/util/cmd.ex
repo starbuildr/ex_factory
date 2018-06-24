@@ -10,7 +10,8 @@ defmodule ExFactory.Util.Cmd do
   """
   @spec exec(String.t, [String.t]) :: generic_response
   def exec(command, args) do
-    case System.cmd(command, args, stderr_to_stdout: true) do
+    workdir = System.get_env("EX_FACTORY_WORKDIR") || System.cwd()
+    case System.cmd(command, args, stderr_to_stdout: true, cd: workdir) do
       {_, 0} ->
         :ok
       {error_message, _exit_code} ->
