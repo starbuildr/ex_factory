@@ -27,13 +27,13 @@ WantedBy=multi-user.target
   """
   def run([workdir, token]) do
     if File.dir?(workdir) do
-      unless File.exists?(service_file) do
-        IO.inspect(service_file)
+      unless File.exists?(@service_file) do
+        IO.inspect(@service_file)
   
         content = @service_content
         |> String.replace("$WORKDIR", workdir)
         |> String.replace("$TOKEN", token)
-        File.write(service_file, @service_content)
+        File.write(@service_file, content)
   
         IO.puts("Service was successfully installed, start with `sudo systemctl restart ex_factory.service`, enable (safe from reboots) with `systemctl enable ex_factory.service`")
       else
