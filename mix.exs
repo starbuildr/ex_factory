@@ -4,7 +4,7 @@ defmodule ExFactory.Mixfile do
   def project do
     [
       app: :ex_factory,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.5",
       description: "Elixir library to manage automatic docker-compose redeployments for new docker images",
       docs: [extras: ["README.md"]],

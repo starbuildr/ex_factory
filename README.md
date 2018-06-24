@@ -20,6 +20,8 @@ Add hook to your CI/CD environment like `http://localhost:4056/redeploy?token=EX
 
 ExFactory will use your `docker-compose.yml` settings to fetch new version of images and redeployment of containers.
 
+Use `EX_FACTORY_WORKDIR` env variable to set folder of a target `docker-compose.yml`
+
 ### Authorization
 
 To enable protected access, set:
