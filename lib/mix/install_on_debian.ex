@@ -29,8 +29,9 @@ defmodule Mix.Tasks.InstallOnDebian do
   Install as Debian service.
   """
   def run([workdir, token]) do
-    System.set_env("EX_FACTORY_WORKDIR", workdir)
-    System.set_env("EX_FACTORY_ACCESS_TOKEN", token)
+    System.put_env("EX_FACTORY_WORKDIR", workdir)
+    System.put_env("EX_FACTORY_ACCESS_TOKEN", token)
+    System.put_env("MIX_ENV", "prod")
     Mix.Tasks.Release.run([])
 
     if File.dir?(workdir) do
