@@ -8,8 +8,9 @@ defmodule Mix.Tasks.InstallOnDebian do
   Description=Daemon to manage automatic docker-compose redeployments for the new image releases
   
   [Service]
-  Type=simple
+  Type=forking
   Restart=on-failure
+  RestartSec=5
   Environment=MIX_ENV=prod
   Environment=LANG=en_US.UTF-8
   Environment=EX_FACTORY_ACCESS_TOKEN=$TOKEN
@@ -17,7 +18,8 @@ defmodule Mix.Tasks.InstallOnDebian do
   Environment=HOME=#{System.cwd()}
   
   WorkingDirectory=#{System.cwd()}
-  ExecStart=/usr/local/bin/mix run --no-halt
+  ExecStart=#{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} start'
+  ExecStop=#{System.cwd()}_build/prod/rel/ex_factory/bin/#{@service_name} stop'
   
   [Install]
   WantedBy=multi-user.target
@@ -27,13 +29,17 @@ defmodule Mix.Tasks.InstallOnDebian do
   Install as Debian service.
   """
   def run([workdir, token]) do
+    System.set_env("EX_FACTORY_WORKDIR", workdir)
+    System.set_env("EX_FACTORY_ACCESS_TOKEN", token)
+    Mix.Tasks.Release.run([])
+
     if File.dir?(workdir) do
       unless File.exists?(@service_file) do
         IO.inspect(@service_file)
         put_service_file(workdir, token)
       else
         case IO.gets("Service have been already installed as #{@service_name}, replace the existing installation Y[n]?") do
-          confirm when confirm in ["Y", "Y\n"] ->
+          "Y" ->
             put_service_file(workdir, token)
           _ ->
             IO.puts("Leaving existing installation untouched...")
@@ -46,12 +52,9 @@ defmodule Mix.Tasks.InstallOnDebian do
     end
   end
   def run(_) do
-    """
-    First argument should be a folder with #{IO.ANSI.format([:black_background, :red, "docker-compose.yml"])} to target
-    Second argument should be an #{IO.ANSI.format([:black_background, :red, "access token"])} for external access
-
-    Example: #{IO.ANSI.format([:black_background, :cyan, "mix install_on_debian /home/user/app jsd9020Adju90aVcc2"])}
-    """ |> IO.puts()
+    IO.puts("First argument should be a folder with docker-compose.yml to target")
+    IO.puts("Second argument should be an access token for external access")
+    IO.puts("Example: mix install_on_debian /home/user/app jsd9020Adju90!A")
   end
 
   defp put_service_file(workdir, token) do
