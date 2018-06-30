@@ -40,7 +40,7 @@ defmodule Mix.Tasks.InstallOnDebian do
         put_service_file(workdir, token)
       else
         case IO.gets("Service have been already installed as #{@service_name}, replace the existing installation Y[n]?") do
-          input in ["Y", "Y\n"] ->
+          input when input in ["Y", "Y\n"] ->
             put_service_file(workdir, token)
           _ ->
             IO.puts("Leaving existing installation untouched...")
