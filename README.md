@@ -15,11 +15,15 @@ ExFactory will use your `docker-compose.yml` settings to fetch new version of im
 Use `EX_FACTORY_WORKDIR` env variable to set folder of a target `docker-compose.yml`
 
 ### Ubuntu
+To use private docker images you need to authorise on docker first with `docker login` (step 2),
+then create a symlink (step 3), because $HOME variable will be overridden in ex_factory service.
 
-* `git clone https://github.com/starbuildr/ex_factory.git`
-* `MIX_ENV=prod mix prepare_for_debian [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
-* `sudo MIX_ENV=prod mix install_on_debian`
-* `sudo systemctl start ex_factory.service`
+1. `git clone https://github.com/starbuildr/ex_factory.git`
+2. `docker login`
+3. `ln -s ~/.docker ~/ex_factory/.docker`
+4. `MIX_ENV=prod mix prepare_for_debian [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
+5. `sudo MIX_ENV=prod mix install_on_debian`
+6. `sudo systemctl start ex_factory.service`
 
 #### Troubleshooting
 
