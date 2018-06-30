@@ -4,7 +4,7 @@ defmodule ExFactory.Web.Authorization do
   def call(conn, _opts) do
     if config(:enabled, false) do
       conn
-      |> get_auth_headers
+      |> get_auth_headers()
       |> authenticate()
     else
       conn
@@ -15,7 +15,7 @@ defmodule ExFactory.Web.Authorization do
     tokens =
       with \
         [] <- Plug.Conn.get_req_header(conn, "authorization"),
-        token when token != nil <- Plug.Conn.fetch_query_params(conn) |> Map.get("token")
+        token when token != nil <- conn.params |> Map.get("token")
       do
         [token]
       else

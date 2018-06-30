@@ -8,6 +8,7 @@ defmodule ExFactory.Web.Router do
   alias ExFactory.Web.ActionPlug
   require Logger
 
+  plug :fetch_query_params
   plug ExFactory.Web.Authorization
   plug :match
   plug :dispatch

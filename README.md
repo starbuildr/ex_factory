@@ -25,17 +25,25 @@ third and fourth argument of `ex_factory.systemd.prepare` mix command (step 4).
 2. `docker login`
 3. `ln -s ~/.docker ~/ex_factory/.docker`
 4. `MIX_ENV=prod mix ex_factory.systemd.prepare [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
-5. `sudo MIX_ENV=prod mix install_on_debian`
+5. `sudo MIX_ENV=prod mix ex_factory.systemd.install`
 6. `sudo systemctl start ex_factory.service`
 
-#### Troubleshooting
+#### Upgrade
 
-* `sudo systemctl stop ex_factory.service`
-* `sudo rm -R _build`
-* `MIX_ENV=prod mix prepare_for_debian [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
-* `sudo MIX_ENV=prod mix ex_factory.systemd.installn`
-* `sudo systemctl daemon-reload`
-* `sudo systemctl start ex_factory.service`
+1. `cd ~/ex_factory && git pull origin master`
+2. `sudo systemctl stop ex_factory.service`
+3. `sudo rm -R _build`
+4. `MIX_ENV=prod mix ex_factory.systemd.prepare [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
+5. `sudo MIX_ENV=prod mix ex_factory.systemd.install`
+6. `sudo systemctl daemon-reload`
+7. `sudo systemctl start ex_factory.service`
+
+#### Uninstall
+
+1. `sudo systemctl stop ex_factory.service`
+2. `sudo systemctl disable ex_factory.service`
+3. `rm -R ~/ex_factory`
+4. `rm /lib/systemd/system/ex_factory.service`
 
 ### Authorization
 
