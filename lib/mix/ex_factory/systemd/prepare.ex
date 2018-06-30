@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.PrepareForDebian do
+defmodule Mix.Tasks.ExFactory.Systemd.Prepare do
   use Mix.Task
   import IO.ANSI
 
@@ -58,7 +58,7 @@ defmodule Mix.Tasks.PrepareForDebian do
       File.write(@service_local_file, content)
   
       IO.puts("Generating service config file to #{@service_local_file}...")
-      IO.puts(["Run ", cyan(), "sudo MIX_ENV=prod mix install_on_debian", default_color(), " to finish the installation."])
+      IO.puts(["Run ", cyan(), "sudo MIX_ENV=prod mix ex_factory.systemd.install", default_color(), " to finish the installation."])
       :ok
     else
       IO.puts(["First param should be the folder where a target ", cyan(), "docker-compose.yml", default_color(), " is stored"])
@@ -70,6 +70,6 @@ defmodule Mix.Tasks.PrepareForDebian do
     IO.puts("First argument should be a folder with docker-compose.yml to target")
     IO.puts("Second argument should be an access token for external access")
     IO.puts("Third and forth optional arguments (default are ubuntu) are a user and security group to start this daemon from")
-    IO.puts(["Example: ", cyan(), "MIX_ENV=prod mix prepare_for_debian /home/user/app #{random_token}", default_color()])
+    IO.puts(["Example: ", cyan(), "MIX_ENV=prod mix ex_factory.systemd.prepare /home/user/app #{random_token}", default_color()])
   end
 end

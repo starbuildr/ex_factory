@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.InstallOnDebian do
+defmodule Mix.Tasks.ExFactory.Systemd.Install do
   use Mix.Task
   import IO.ANSI
 
@@ -32,7 +32,7 @@ defmodule Mix.Tasks.InstallOnDebian do
       end
     else
       IO.puts([
-        "Run ", cyan(), "mix prepare_for_debian FOLDER TOKEN", default_color(),
+        "Run ", cyan(), "mix ex_factory.systemd.prepare FOLDER TOKEN", default_color(),
         " before using this command to prepare service config"
       ])
       :ok

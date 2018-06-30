@@ -19,9 +19,10 @@ defmodule ExFactory.Web.Router do
   end
 
   get "/" do
-    send_resp(conn, 200, "Plug!")
+    send_resp(conn, 200, "Ping!")
   end
   get "/redeploy", to: ActionPlug.Redeploy
+  post "/redeploy", to: ActionPlug.Redeploy
 
   match "*any" do
     send_resp(conn, 404, "Not Found")
