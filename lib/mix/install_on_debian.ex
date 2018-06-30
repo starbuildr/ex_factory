@@ -45,7 +45,7 @@ defmodule Mix.Tasks.InstallOnDebian do
       "Service was successfully installed, start with ", cyan(),
       "sudo systemctl start ex_factory.service", default_color(),
       " enable (safe from reboots) with ", cyan(),
-      "systemctl enable ex_factory.service", default_color()
+      "sudo systemctl enable ex_factory.service", default_color()
     ])
   end
 end
