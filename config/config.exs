@@ -36,5 +36,5 @@ config :ex_factory, ExFactory.Web.Router,
   ]
 
 config :ex_factory, ExFactory.Web.Authorization,
-  enabled: false,
+  enabled: System.get_env("MIX_ENV") == "prod",
   authed_tokens: [System.get_env("EX_FACTORY_ACCESS_TOKEN")] |> Enum.filter(&(not is_nil(&1)))
