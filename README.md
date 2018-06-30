@@ -6,15 +6,7 @@ Automatic redeployment system for `docker-compose`.
 
 ## Installation
 
-Add `ex_factory` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:ex_factory, "~> 0.1"}
-  ]
-end
-```
+Make sure that Elixir and Erlang with their dependencies are both installed on your current system.
 
 Add hook to your CI/CD environment like `http://localhost:4056/redeploy?token=EX_FACTORY_ACCESS_TOKEN`
 
@@ -25,7 +17,8 @@ Use `EX_FACTORY_WORKDIR` env variable to set folder of a target `docker-compose.
 ### Sample flow for Ubuntu
 
 * `git clone https://github.com/starbuildr/ex_factory.git`
-* `sudo mix install_on_debian [COMPOSE_WORKDIR] [ACCESS_TOKEN]`
+* `MIX_ENV=prod mix prepare_for_debian [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
+* `sudo mix install_on_debian`
 * `sudo systemctl start ex_factory.service`
 
 ### Authorization
