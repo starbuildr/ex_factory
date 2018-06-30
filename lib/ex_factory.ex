@@ -5,7 +5,5 @@ defmodule ExFactory do
 
   use Application
 
-  def start(_type, _args) do
-    ExFactory.Web.Router.start_link()
-  end
+  def start(_type, _args), do: ExFactory.Supervisor.start_link()
 end
