@@ -39,7 +39,7 @@ defmodule Mix.Tasks.PrepareForDebian do
   Prepare service config for a Debian system installation.
   """
   def run([workdir, token]) do
-    run([workdir, token, "ubuntu", "ubuntu"])
+    run([workdir, token, "ubuntu", "docker"])
   end
   def run([workdir, token, user, group]) do
     System.put_env("EX_FACTORY_WORKDIR", workdir)
