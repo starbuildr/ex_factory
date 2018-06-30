@@ -26,10 +26,10 @@ defmodule Mix.Tasks.PrepareForDebian do
   Environment=HOME=#{System.cwd()}
   
   WorkingDirectory=#{System.cwd()}
-  ExecStart=/bin/bash -c 'exec #{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} start'
-  ExecStop=/bin/bash -c 'exec #{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} stop'
+  ExecStart=#{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} start
+  ExecStop=#{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} stop
   SyslogIdentifier=#{@service_name}
-  RemainAfterExit=no
+  RemainAfterExit=yes
   
   [Install]
   WantedBy=multi-user.target
