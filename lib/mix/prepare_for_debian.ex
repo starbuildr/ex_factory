@@ -23,7 +23,6 @@ defmodule Mix.Tasks.PrepareForDebian do
   Environment=COOKIE=#{@erlang_cookie}
   Environment=EX_FACTORY_ACCESS_TOKEN=$TOKEN
   Environment=EX_FACTORY_WORKDIR=$WORKDIR
-  Environment=HOME=#{System.cwd()}
   
   WorkingDirectory=#{System.cwd()}
   ExecStart=#{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} start

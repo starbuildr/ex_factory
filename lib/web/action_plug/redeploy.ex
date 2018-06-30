@@ -5,6 +5,7 @@ defmodule ExFactory.Web.ActionPlug.Redeploy do
 
   alias Mix.Tasks.Docker.Compose
   import Plug.Conn
+  require Logger
 
   def init(opts), do: opts
 
@@ -20,11 +21,14 @@ defmodule ExFactory.Web.ActionPlug.Redeploy do
     else
       false ->
         send_resp(conn, 404, "docker-compose.yml doesn't exist")
-      {:pull_new_images, _} ->
+      {:pull_new_images, errors} ->
+        Logger.error fn -> "Pull: " <> inspect(errors) end
         send_resp(conn, 500, "Failed to pull new image versions")
-      {:stop_containers, _} ->
+      {:stop_containers, errors} ->
+        Logger.error fn -> "Stop: " <> inspect(errors) end
         send_resp(conn, 500, "Failed to stop and destroy old containers")
-      {:deploy_containers, _} ->
+      {:deploy_containers, errors} ->
+        Logger.error fn -> "Deploy: " <> inspect(errors) end
         send_resp(conn, 500, "Failed to deploy and start new containers")
     end
   end
