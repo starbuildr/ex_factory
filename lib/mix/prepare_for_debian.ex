@@ -19,6 +19,7 @@ defmodule Mix.Tasks.PrepareForDebian do
   Group=$GROUP
   Environment=MIX_ENV=prod
   Environment=LANG=en_US.UTF-8
+  Environment=REPLACE_OS_VARS=true
   Environment=COOKIE=#{@erlang_cookie}
   Environment=EX_FACTORY_ACCESS_TOKEN=$TOKEN
   Environment=EX_FACTORY_WORKDIR=$WORKDIR
@@ -27,6 +28,8 @@ defmodule Mix.Tasks.PrepareForDebian do
   WorkingDirectory=#{System.cwd()}
   ExecStart=/bin/bash -c 'exec #{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} start'
   ExecStop=/bin/bash -c 'exec #{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} stop'
+  SyslogIdentifier=#{@service_name}
+  RemainAfterExit=no
   
   [Install]
   WantedBy=multi-user.target
@@ -55,7 +58,7 @@ defmodule Mix.Tasks.PrepareForDebian do
       File.write(@service_local_file, content)
   
       IO.puts("Generating service config file to #{@service_local_file}...")
-      IO.puts(["Run ", cyan(), "sudo mix install_on_debian", default_color(), " to finish the installation."])
+      IO.puts(["Run ", cyan(), "sudo MIX_ENV=prod mix install_on_debian", default_color(), " to finish the installation."])
       :ok
     else
       IO.puts(["First param should be the folder where a target ", cyan(), "docker-compose.yml", default_color(), " is stored"])
@@ -63,10 +66,10 @@ defmodule Mix.Tasks.PrepareForDebian do
     end
   end
   def run(_) do
-    random_token = :crypto.strong_rand_bytes(12) |> Base.encode32() |> String.to_charlist()
+    random_token = :crypto.strong_rand_bytes(12) |> Base.encode64() |> String.to_charlist()
     IO.puts("First argument should be a folder with docker-compose.yml to target")
     IO.puts("Second argument should be an access token for external access")
     IO.puts("Third and forth optional arguments (default are ubuntu) are a user and security group to start this daemon from")
-    IO.puts(["Example: ", cyan(), "mix prepare_for_debian /home/user/app #{random_token}", default_color()])
+    IO.puts(["Example: ", cyan(), "MIX_ENV=prod mix prepare_for_debian /home/user/app #{random_token}", default_color()])
   end
 end

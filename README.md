@@ -18,7 +18,7 @@ Use `EX_FACTORY_WORKDIR` env variable to set folder of a target `docker-compose.
 
 * `git clone https://github.com/starbuildr/ex_factory.git`
 * `MIX_ENV=prod mix prepare_for_debian [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
-* `sudo mix install_on_debian`
+* `sudo MIX_ENV=prod mix install_on_debian`
 * `sudo systemctl start ex_factory.service`
 
 ### Authorization
