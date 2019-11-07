@@ -10,7 +10,6 @@ defmodule ExFactory.Supervisor do
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  @spec init([]) :: {:ok, pid}
   def init([]) do
     children = [
       worker(ExFactory.Web.Router, [])

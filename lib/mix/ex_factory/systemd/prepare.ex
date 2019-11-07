@@ -10,7 +10,7 @@ defmodule Mix.Tasks.ExFactory.Systemd.Prepare do
   Description=Daemon to manage automatic docker-compose redeployments for the new image releases
   After=network.target
   Requires=network.target
-  
+
   [Service]
   Type=forking
   Restart=on-failure
@@ -23,14 +23,14 @@ defmodule Mix.Tasks.ExFactory.Systemd.Prepare do
   Environment=COOKIE=#{@erlang_cookie}
   Environment=EX_FACTORY_ACCESS_TOKEN=$TOKEN
   Environment=EX_FACTORY_WORKDIR=$WORKDIR
-  Environment=HOME=#{System.cwd()}
-  
-  WorkingDirectory=#{System.cwd()}
-  ExecStart=#{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} start
-  ExecStop=#{System.cwd()}/_build/prod/rel/ex_factory/bin/#{@service_name} stop
+  Environment=HOME=#{File.cwd!()}
+
+  WorkingDirectory=#{File.cwd!()}
+  ExecStart=#{File.cwd!()}/_build/prod/rel/ex_factory/bin/#{@service_name} start
+  ExecStop=#{File.cwd!()}/_build/prod/rel/ex_factory/bin/#{@service_name} stop
   SyslogIdentifier=#{@service_name}
   RemainAfterExit=yes
-  
+
   [Install]
   WantedBy=multi-user.target
   """ |> String.trim()
@@ -56,7 +56,7 @@ defmodule Mix.Tasks.ExFactory.Systemd.Prepare do
       |> String.replace("$USER", user)
       |> String.replace("$GROUP", group)
       File.write(@service_local_file, content)
-  
+
       IO.puts("Generating service config file to #{@service_local_file}...")
       IO.puts(["Run ", cyan(), "sudo MIX_ENV=prod mix ex_factory.systemd.install", default_color(), " to finish the installation."])
       :ok

@@ -10,7 +10,7 @@ defmodule ExFactory.Web.ActionPlug.Redeploy do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    workdir = System.get_env("EX_FACTORY_WORKDIR") || System.cwd()
+    workdir = System.get_env("EX_FACTORY_WORKDIR") || File.cwd!()
     with \
       true <- File.exists?("#{workdir}/docker-compose.yml"),
       {:pull_new_images, :ok} <- {:pull_new_images, Compose.PullNewImages.run([])},

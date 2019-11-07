@@ -4,8 +4,8 @@ defmodule ExFactory.Mixfile do
   def project do
     [
       app: :ex_factory,
-      version: "0.1.3",
-      elixir: "~> 1.5",
+      version: "0.2.0",
+      elixir: "~> 1.9",
       description: "Elixir library to manage automatic docker-compose redeployments for new docker images",
       docs: [extras: ["README.md"]],
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -44,19 +44,18 @@ defmodule ExFactory.Mixfile do
     [
       {:cowboy, "~> 1.0"},
       {:plug, "~> 1.0"},
-      {:ex_doc, ">= 0.0.0", only: :dev},
-      {:distillery, "~> 2.0.11", runtime: false}
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 
   defp aliases do
     [
-      "redeploy": [
+      redeploy: [
         "docker.compose.pull_new_images",
         "docker.compose.stop_containers",
         "docker.compose.deploy_contrainers"
       ],
-      "test": ["test"]
+      test: ["test"]
     ]
   end
 end
