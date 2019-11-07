@@ -47,7 +47,7 @@ defmodule Mix.Tasks.ExFactory.Systemd.Prepare do
     System.put_env("MIX_ENV", "prod")
     System.put_env("COOKIE", @erlang_cookie)
 
-    Mix.Task.run("release", ["--env", "prod"])
+    Mix.Task.run("release")
 
     if File.dir?(workdir) and File.exists?("#{workdir}/docker-compose.yml") do
       content = @service_content

@@ -24,9 +24,10 @@ third and fourth argument of `ex_factory.systemd.prepare` mix command (step 4).
 1. `cd ~/ && git clone https://github.com/starbuildr/ex_factory.git`
 2. `docker login`
 3. `ln -s ~/.docker ~/ex_factory/.docker`
-4. `MIX_ENV=prod mix ex_factory.systemd.prepare [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
-5. `sudo MIX_ENV=prod mix ex_factory.systemd.install`
-6. `sudo systemctl start ex_factory.service`
+4. `cd ~/ex_factory && mix deps.get`
+5. `MIX_ENV=prod mix ex_factory.systemd.prepare [COMPOSE_WORKDIR] [EX_FACTORY_ACCESS_TOKEN]`
+6. `sudo MIX_ENV=prod mix ex_factory.systemd.install`
+7. `sudo systemctl start ex_factory.service`
 
 #### Upgrade
 
