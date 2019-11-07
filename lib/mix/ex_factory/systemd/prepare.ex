@@ -26,7 +26,7 @@ defmodule Mix.Tasks.ExFactory.Systemd.Prepare do
   Environment=HOME=#{File.cwd!()}
 
   WorkingDirectory=#{File.cwd!()}
-  ExecStart=#{File.cwd!()}/_build/prod/rel/ex_factory/bin/#{@service_name} start
+  ExecStart=#{File.cwd!()}/_build/prod/rel/ex_factory/bin/#{@service_name} daemon
   ExecStop=#{File.cwd!()}/_build/prod/rel/ex_factory/bin/#{@service_name} stop
   SyslogIdentifier=#{@service_name}
   RemainAfterExit=yes
